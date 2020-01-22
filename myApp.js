@@ -9,7 +9,7 @@ app.get("/", function(req, res){
 
 app.get("/api/timestamp", function(req, res){
     var date = new Date();
-    res.json({utc: date.toUTCString(), unix: Math.floor(date/1000)})
+    res.json({utc: date.toUTCString(), unix: (date/1)})
 })
 
 app.get("/api/timestamp/:date_string?", function(req, res){
@@ -26,8 +26,10 @@ app.get("/api/timestamp/:date_string?", function(req, res){
             date.setUTCSeconds(Math.floor(epoch)/1000)
             res.json({unix: epoch, utc: date.toUTCString()})
         } else {
-            res.send("something bad")
+            res.json({"error" : "Invalid Date" })
         }
+    } else {
+      res.json({"error" : "Invalid Date" })
     }
 })
 
